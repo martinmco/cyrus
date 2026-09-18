@@ -12,6 +12,13 @@ outside this public repository. The Mac runs this fork through the
 `com.martin.cyrus` LaunchAgent and its existing Cloudflare/Linear connections.
 See [Mac setup, operations and rollback](./deploy/mac/README.md). To check the
 existing credentials without a model turn, run `./runCyrus.sh check`.
+The maintained Mac installation also has a user-level `verify-and-ship` override
+at `~/.cyrus/user-skills-plugin/skills/verify-and-ship/SKILL.md`; it guides the
+agent to hand off completed GitHub PRs as ready and verify `isDraft=false`,
+subject to explicit keep-Draft instructions. This is skill guidance only, not
+runtime enforcement in the worker. The agent reports failed or unavailable
+checks and does not merge or enable auto-merge; Martin reviews and merges from
+Linear.
 The fork's Linear route is `cy-4244`, with `Cyrus Installation` as the fallback
 project name; Cyrus worktrees for this fork start from `codex/maintained-install`.
 Issue sessions default to Codex `gpt-5.6-sol` with `low` reasoning. Linear's
