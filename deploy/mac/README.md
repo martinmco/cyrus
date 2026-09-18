@@ -101,3 +101,11 @@ configuration change; it created no branch and is not proof of a real PR.
 Login/reboot and sleep/wake behaviour need natural lifecycle observations.
 Offline delegation, full F1 session execution, and push/PR delivery remain in
 the installation plan. No model-assisted task was dispatched in this deployment.
+
+## Worktree setup hook
+
+`cyrus-setup.sh` writes the issue-specific `CYRUS_SERVER_PORT` to the worktree’s
+local `.env`, preserving unrelated entries. It uses the repository’s tracked agent
+instructions and does not copy a private `CLAUDE.local.md` from another machine.
+The hook runs when Cyrus creates a worktree; changing this script does not require
+a worker rebuild or restart.

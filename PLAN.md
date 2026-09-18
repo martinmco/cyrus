@@ -13,7 +13,11 @@
 | ✅ Runner selection | Codex default is GPT-5.6 Sol, low reasoning; friendly Linear model/effort labels resolve and relaunched service is healthy | Confirm the actual model and effort in the first issue session |
 | ✅ Ready-for-review guidance | Installed user-level `verify-and-ship` override documents ready-state handoff, `isDraft=false` read-back, reporting, and no merge | Apply it to completed GitHub work; Martin reviews and merges |
 
+| ✅ Worktree setup hook | Removed obsolete `/Users/cyrusops` instructions copy; fresh and repeat setup checks pass | New worktrees use the maintained hook |
+
 ## Current work
+
+The setup-hook repair removes the obsolete machine-specific instructions copy while retaining issue-port configuration. Fresh-worktree and repeat-run checks cover startup, port updates, and preservation of unrelated configuration.
 
 Martin approved adopting Cyrus as a maintained self-hosted system on 18 September 2026. The former evaluation does not gate installation. Active work uses installation and operational acceptance language; historical records remain evidence.
 

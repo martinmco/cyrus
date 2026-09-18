@@ -10,6 +10,8 @@ The built CLI is `apps/cli/dist/src/app.js`; do not substitute a published npm
 package when running local fork changes. Keep credentials and runtime state
 outside this public repository. The Mac runs this fork through the
 `com.martin.cyrus` LaunchAgent and its existing Cloudflare/Linear connections.
+The repository setup hook configures an issue-specific port without requiring
+private instruction files from another machine.
 See [Mac setup, operations and rollback](./deploy/mac/README.md). To check the
 existing credentials without a model turn, run `./runCyrus.sh check`.
 The maintained Mac installation also has a user-level `verify-and-ship` override

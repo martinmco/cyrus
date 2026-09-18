@@ -25,4 +25,5 @@ else
     echo "CYRUS_SERVER_PORT=$CYRUS_SERVER_PORT" >> .env
 fi
 
-cp /Users/cyrusops/code/cyrus/CLAUDE.local.md CLAUDE.local.md
+# Agent instructions are tracked in this repository. Do not copy private
+# instruction files from a machine-specific checkout.
