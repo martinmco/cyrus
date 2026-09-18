@@ -8,7 +8,10 @@ This fork is maintained at `martinmco/cyrus`, with `cyrusagents/cyrus` as the
 `corepack pnpm install --frozen-lockfile` followed by `corepack pnpm build`.
 The built CLI is `apps/cli/dist/src/app.js`; do not substitute a published npm
 package when running local fork changes. Keep credentials and runtime state
-outside this public repository. Service deployment is pending the host choice.
+outside this public repository. The Mac runs this fork through the
+`com.martin.cyrus` LaunchAgent and its existing Cloudflare/Linear connections.
+See [Mac setup, operations and rollback](./deploy/mac/README.md). To check the
+existing credentials without a model turn, run `./runCyrus.sh check`.
 
 <div>
   <a href="https://github.com/ceedaragents/cyrus/actions">

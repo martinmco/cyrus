@@ -1,0 +1,7 @@
+# Existing named tunnel identity retained; no DNS or credential rotation.
+tunnel: d3edf5f6-e265-4eb9-a775-7a2ab36050c3
+credentials-file: /Users/martin/.cloudflared/d3edf5f6-e265-4eb9-a775-7a2ab36050c3.json
+ingress:
+  - hostname: cyrus.martinm.co
+    service: http://localhost:3456
+  - service: http_status:404
