@@ -5,6 +5,7 @@ This changelog documents internal development changes, refactors, tooling update
 ## [Unreleased]
 
 ### Changed
+- Documented the maintained-installation ready-for-review handoff, including the required Draft-to-ready transition, `isDraft=false` verification, failure reporting, and no-merge boundary. ([SYS-27](https://linear.app/uptickstudio/issue/SYS-27/document-and-verify-cyrus-ready-for-review-handoff), [#1](https://github.com/martinmco/cyrus/pull/1))
 - Switched builds, type checking, and development watch commands to the native TypeScript compiler, reducing measured local build time by 74% and type-check time by 68%. Prompt-assembly tests now use mock Linear trackers reliably, preventing network-dependent CI timeouts. ([CYPACK-1520](https://linear.app/ceedar/issue/CYPACK-1520), [#1485](https://github.com/cyrusagents/cyrus/pull/1485))
 
 ### Fixed
