@@ -74,6 +74,23 @@ backup is `~/.cyrus/backups/config-before-launchd-20260918.json`. Earlier config
 backups also exist. Stop this LaunchAgent before using the old foreground
 launcher. Do not restore an old expired OAuth token merely to roll code back.
 
+## Ready-for-review handoff
+
+The maintained Mac installation has a user-level override at
+`~/.cyrus/user-skills-plugin/skills/verify-and-ship/SKILL.md`. It takes
+precedence over the bundled `verify-and-ship` skill and is guidance for the
+agent's shipping workflow, not worker-side code enforcement.
+
+For a completed GitHub change, the override requires the agent to update the
+PR description, run `gh pr ready`, and read the same PR back with
+`gh pr view --json isDraft --jq '.isDraft'`; the verified result must be
+`false`. A PR may remain Draft only when the issue, project instructions, or
+agent guidance explicitly requires that exception. If the transition or
+read-back fails, the handoff is not complete. The agent must report failed or
+unavailable checks, and must never merge, enable auto-merge, approve on
+Martin's behalf, or claim independent human approval. Martin inspects and
+merges from Linear.
+
 ## Verification boundaries
 
 Mac service startup, public status/version, launchd-context credentials,

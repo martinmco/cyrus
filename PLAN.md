@@ -11,6 +11,7 @@
 | ✅ Routing cleanup | Obsolete Arkanoid removed; maintained fork wired; doctor reports no hazards | Verify real Linear delegation |
 | 🟡 Connections and sandbox | Existing OAuth renewed; launchd credential check and sandbox GitHub read pass | Verify push/PR delivery with a useful task |
 | ✅ Runner selection | Codex default is GPT-5.6 Sol, low reasoning; friendly Linear model/effort labels resolve and relaunched service is healthy | Confirm the actual model and effort in the first issue session |
+| ✅ Ready-for-review guidance | Installed user-level `verify-and-ship` override documents ready-state handoff, `isDraft=false` read-back, reporting, and no merge | Apply it to completed GitHub work; Martin reviews and merges |
 
 ## Current work
 
@@ -21,6 +22,15 @@ Canonical source: `/Users/martin/db/Projects/cyrus`. Fork: https://github.com/ma
 System home: https://linear.app/uptickstudio/initiative/cyrus-9e254f735757. The initiative route `route/cy-4244` is wired to this fork, with `Cyrus Installation` as the project-name fallback and `codex/maintained-install` as the base branch. Existing runtime state and OAuth credentials live outside this public fork under `~/.cyrus`; secrets remain Bitwarden-owned with the existing Keychain cache. No credentials belong in Git.
 
 The built upstream baseline is `e9e1e53d629b023545ebfd821bcd16c67f44f217`. Martin selected Mac launchd with existing connections. The maintained service is `com.martin.cyrus`; setup, commands and rollback are in [deploy/mac/README.md](deploy/mac/README.md). The previous package installation remains preserved at `/Users/martin/db/code2/productivity/cyrus-trial`. Its name is historical, not the new operating model. The current issue-session default is Codex `gpt-5.6-sol` at `low` effort; issue labels or description selectors may override it.
+
+The maintained Mac installation also has a user-level `verify-and-ship` override
+at `~/.cyrus/user-skills-plugin/skills/verify-and-ship/SKILL.md`. It is agent
+guidance: it requires `gh pr ready` and a read-back confirming `isDraft=false`
+unless explicit instructions require keeping the PR Draft, and requires clear
+reporting of failed or unavailable checks. It does not enforce behavior in the
+worker; agents must not merge or enable auto-merge, and Martin reviews and
+merges from Linear. See [Mac operations](deploy/mac/README.md) for the full
+handoff rule.
 
 ## Remaining work — single backlog
 
