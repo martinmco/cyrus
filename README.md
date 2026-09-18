@@ -12,6 +12,8 @@ outside this public repository. The Mac runs this fork through the
 `com.martin.cyrus` LaunchAgent and its existing Cloudflare/Linear connections.
 See [Mac setup, operations and rollback](./deploy/mac/README.md). To check the
 existing credentials without a model turn, run `./runCyrus.sh check`.
+The fork's Linear route is `cy-4244`, with `Cyrus Installation` as the fallback
+project name; Cyrus worktrees for this fork start from `codex/maintained-install`.
 
 <div>
   <a href="https://github.com/ceedaragents/cyrus/actions">
