@@ -1,5 +1,15 @@
 # Cyrus
 
+## Maintained self-hosted installation
+
+This fork is maintained at `martinmco/cyrus`, with `cyrusagents/cyrus` as the
+`upstream` remote. Installation state and the operational backlog are in
+[PLAN.md](./PLAN.md). Build from the locked source with
+`corepack pnpm install --frozen-lockfile` followed by `corepack pnpm build`.
+The built CLI is `apps/cli/dist/src/app.js`; do not substitute a published npm
+package when running local fork changes. Keep credentials and runtime state
+outside this public repository. Service deployment is pending the host choice.
+
 <div>
   <a href="https://github.com/ceedaragents/cyrus/actions">
     <img src="https://github.com/ceedaragents/cyrus/actions/workflows/ci.yml/badge.svg" alt="CI">
