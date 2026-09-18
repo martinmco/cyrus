@@ -37,6 +37,7 @@ const RELOAD_MERGED_KEYS = [
 	"claudeDefaultFallbackModel",
 	"geminiDefaultModel",
 	"codexDefaultModel",
+	"codexDefaultReasoningEffort",
 	"cursorDefaultModel",
 	"cursorDefaultFallbackModel",
 	"opencodeDefaultModel",
@@ -318,6 +319,9 @@ export class ConfigManager extends EventEmitter {
 					parsedConfig.geminiDefaultModel || this.config.geminiDefaultModel,
 				codexDefaultModel:
 					parsedConfig.codexDefaultModel || this.config.codexDefaultModel,
+				codexDefaultReasoningEffort:
+					parsedConfig.codexDefaultReasoningEffort ??
+					this.config.codexDefaultReasoningEffort,
 				cursorDefaultModel:
 					parsedConfig.cursorDefaultModel || this.config.cursorDefaultModel,
 				cursorDefaultFallbackModel:

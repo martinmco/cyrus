@@ -43,6 +43,7 @@ describe("JSON Schema export", () => {
 				"claudeDefaultFallbackModel",
 				"geminiDefaultModel",
 				"codexDefaultModel",
+				"codexDefaultReasoningEffort",
 				"opencodeDefaultModel",
 				"opencodeDefaultFallbackModel",
 				"inferOpenCodeRunnerFromProviderModel",

@@ -62,6 +62,7 @@ export interface IRunnerSelector {
 		runnerType: RunnerType;
 		modelOverride?: string;
 		fallbackModelOverride?: string;
+		modelReasoningEffort?: "minimal" | "low" | "medium" | "high" | "xhigh";
 	};
 	getDefaultModelForRunner(runnerType: RunnerType): string | undefined;
 	getDefaultFallbackModelForRunner(runnerType: RunnerType): string | undefined;
@@ -469,6 +470,10 @@ export class RunnerConfigBuilder {
 			),
 			// Priority order: label override > repository config > global default
 			model: finalModel,
+			...(runnerType === "codex" &&
+				runnerSelection.modelReasoningEffort && {
+					modelReasoningEffort: runnerSelection.modelReasoningEffort,
+				}),
 			fallbackModel:
 				fallbackModelOverride ||
 				input.repository.fallbackModel ||

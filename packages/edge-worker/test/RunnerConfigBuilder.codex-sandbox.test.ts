@@ -1,4 +1,9 @@
-import type { CyrusAgentSession, ILogger, RepositoryConfig } from "cyrus-core";
+import type {
+	CyrusAgentSession,
+	EdgeWorkerConfig,
+	ILogger,
+	RepositoryConfig,
+} from "cyrus-core";
 import { describe, expect, it } from "vitest";
 import {
 	type IChatToolResolver,
@@ -6,6 +11,7 @@ import {
 	type IRunnerSelector,
 	RunnerConfigBuilder,
 } from "../src/RunnerConfigBuilder.js";
+import { RunnerSelectionService } from "../src/RunnerSelectionService.js";
 
 const silentLogger: ILogger = {
 	debug: () => {},
@@ -14,7 +20,7 @@ const silentLogger: ILogger = {
 	error: () => {},
 } as unknown as ILogger;
 
-function makeCodexBuilder(): RunnerConfigBuilder {
+function makeCodexBuilder(selector?: IRunnerSelector): RunnerConfigBuilder {
 	const chatToolResolver: IChatToolResolver = {
 		buildChatAllowedTools: () => ["Read(**)"],
 	};
@@ -30,7 +36,7 @@ function makeCodexBuilder(): RunnerConfigBuilder {
 	return new RunnerConfigBuilder(
 		chatToolResolver,
 		mcpConfigProvider,
-		runnerSelector,
+		selector ?? runnerSelector,
 	);
 }
 
@@ -42,8 +48,11 @@ function makeSession(): CyrusAgentSession {
 	} as unknown as CyrusAgentSession;
 }
 
-function buildCodexConfig(sandboxSettings?: Record<string, unknown>) {
-	const { config } = makeCodexBuilder().buildIssueConfig({
+function buildCodexConfig(
+	sandboxSettings?: Record<string, unknown>,
+	selector?: IRunnerSelector,
+) {
+	const { config } = makeCodexBuilder(selector).buildIssueConfig({
 		session: makeSession(),
 		repository: {
 			id: "repo-a",
@@ -70,6 +79,19 @@ function buildCodexConfig(sandboxSettings?: Record<string, unknown>) {
 }
 
 describe("RunnerConfigBuilder Codex sandbox plumbing", () => {
+	it("passes the selected low reasoning effort into the Codex runner", () => {
+		const selector = new RunnerSelectionService({
+			defaultRunner: "codex",
+			codexDefaultModel: "gpt-5.6-sol",
+			codexDefaultReasoningEffort: "low",
+		} as EdgeWorkerConfig);
+		const config = buildCodexConfig(undefined, selector) as unknown as Record<
+			string,
+			unknown
+		>;
+		expect(config.model).toBe("gpt-5.6-sol");
+		expect(config.modelReasoningEffort).toBe("low");
+	});
 	it("translates the egress sandbox into a Codex filesystem allow-list", () => {
 		// Plumbs both write (worktree) and read (worktree + allowed dirs) roots;
 		// the Codex runner turns these into a per-thread permission profile.

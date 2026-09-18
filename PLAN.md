@@ -10,6 +10,7 @@
 | ✅ Mac service deployment | Launchd startup, public status/version, both failure-recovery checks and unload/reload pass | Observe natural login and sleep/wake behaviour |
 | ✅ Routing cleanup | Obsolete Arkanoid removed; maintained fork wired; doctor reports no hazards | Verify real Linear delegation |
 | 🟡 Connections and sandbox | Existing OAuth renewed; launchd credential check and sandbox GitHub read pass | Verify push/PR delivery with a useful task |
+| ✅ Runner selection | Codex default is GPT-5.6 Sol, low reasoning; friendly Linear model/effort labels resolve and relaunched service is healthy | Confirm the actual model and effort in the first issue session |
 
 ## Current work
 
@@ -19,13 +20,13 @@ Canonical source: `/Users/martin/db/Projects/cyrus`. Fork: https://github.com/ma
 
 System home: https://linear.app/uptickstudio/initiative/cyrus-9e254f735757. The initiative route `route/cy-4244` is wired to this fork, with `Cyrus Installation` as the project-name fallback and `codex/maintained-install` as the base branch. Existing runtime state and OAuth credentials live outside this public fork under `~/.cyrus`; secrets remain Bitwarden-owned with the existing Keychain cache. No credentials belong in Git.
 
-The built upstream baseline is `e9e1e53d629b023545ebfd821bcd16c67f44f217`. Martin selected Mac launchd with existing connections. The maintained service is `com.martin.cyrus`; setup, commands and rollback are in [deploy/mac/README.md](deploy/mac/README.md). The previous package installation remains preserved at `/Users/martin/db/code2/productivity/cyrus-trial`. Its name is historical, not the new operating model.
+The built upstream baseline is `e9e1e53d629b023545ebfd821bcd16c67f44f217`. Martin selected Mac launchd with existing connections. The maintained service is `com.martin.cyrus`; setup, commands and rollback are in [deploy/mac/README.md](deploy/mac/README.md). The previous package installation remains preserved at `/Users/martin/db/code2/productivity/cyrus-trial`. Its name is historical, not the new operating model. The current issue-session default is Codex `gpt-5.6-sol` at `low` effort; issue labels or description selectors may override it.
 
 ## Remaining work — single backlog
 
-1. Complete sandbox boundary and GitHub write checks in the actual runner context; read authentication alone does not establish push or PR access.
-2. Complete operational acceptance: natural login/reboot and sleep/wake observations, actual Linear webhook delivery, offline delegation behaviour, and full upstream F1 session execution. Model-assisted validation requires an explicitly selected approved model; do not run the existing terra default incidentally.
-3. Delegate one useful bounded change in an existing project and independently verify tests, commit, push, PR, and terminal Linear activity. SYS-18 is Martin's proposed manual delegation: the Cyrus actor can read it, the real router selects mgenart by mg-b9bb, the clone is clean, and the service token can read remote main. Model remains the existing terra default; no delegation or turn was started by this session.
+1. Complete sandbox boundary and GitHub write checks in the actual runner context. An authenticated sandboxed `git push --dry-run` to `mgenart` succeeds; an actual branch push and PR remain to be observed.
+2. Complete operational acceptance: natural login/reboot and sleep/wake observations, actual Linear webhook delivery, offline delegation behaviour, and full upstream F1 session execution. Model-assisted validation requires an explicitly selected approved model; no turn is spent by a configuration check.
+3. Delegate one useful bounded change in an existing project and independently verify tests, commit, push, PR, and terminal Linear activity. SYS-18 is Martin's proposed manual delegation: the Cyrus actor can read it, the real router selects mgenart by mg-b9bb, and the clone is clean. The historical Arkanoid failure was missing/invalid GitHub CLI authentication; the new token passes a sandboxed authenticated read and a `git push --dry-run`. Actual push/PR delivery remains unproven. No delegation or turn was started by this session.
 4. Reconcile historical evaluation issues and milestones into the installation backlog without deleting evidence or marking unfinished work complete.
 5. Add bounded log retention for the persistent service.
 
@@ -42,3 +43,4 @@ The built upstream baseline is `e9e1e53d629b023545ebfd821bcd16c67f44f217`. Marti
 - Unsigned public webhook rejected (401); existing app subscription cannot be listed without an admin role, so actual delegation delivery is not claimed.
 - Model-free F1 startup, RPC health/status and local issue creation pass; test server stopped. [Protocol report](apps/f1/test-drives/2026-09-18-mac-installation.md) records the partial scope and existing source-CLI invocation issue.
 - Routing updated through project-bootstrap's locked atomic writer, with backup: Arkanoid removed, Cyrus fork registered under cy-4244; both changes confirmed in the running worker's hot-reload log. Doctor passes with no hazards. Existing real project routes retained.
+- Configured the Codex `gpt-5.6-sol` / `low` default with an atomic backup, taught the maintained fork to interpret existing friendly Linear model and effort labels, and verified schema export, full build/typecheck, focused tests, model-free runner config resolution, sandboxed authenticated push dry-run, and idle service restart. No SYS-18 session has started.

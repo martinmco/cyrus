@@ -132,6 +132,62 @@ describe("RunnerSelectionService", () => {
 		expect(selection.fallbackModelOverride).toBe("gpt-5.2-codex");
 	});
 
+	it("uses the configured Sol and low defaults for an unlabeled issue", () => {
+		const service = new RunnerSelectionService({
+			defaultRunner: "codex",
+			codexDefaultModel: "gpt-5.6-sol",
+			codexDefaultReasoningEffort: "low",
+		} as EdgeWorkerConfig);
+		expect(service.determineRunnerSelection([])).toMatchObject({
+			runnerType: "codex",
+			modelOverride: "gpt-5.6-sol",
+			modelReasoningEffort: "low",
+		});
+	});
+
+	it("recognizes human-friendly Linear model and effort labels", () => {
+		const service = new RunnerSelectionService({
+			defaultRunner: "codex",
+			codexDefaultModel: "gpt-5.6-terra",
+			codexDefaultReasoningEffort: "low",
+		} as EdgeWorkerConfig);
+		expect(
+			service.determineRunnerSelection(["GPT-5.6 Sol · high"]),
+		).toMatchObject({
+			modelOverride: "gpt-5.6-sol",
+			modelReasoningEffort: "high",
+		});
+		expect(
+			service.determineRunnerSelection(["GPT-5.6 Sol", "medium effort"]),
+		).toMatchObject({
+			modelOverride: "gpt-5.6-sol",
+			modelReasoningEffort: "medium",
+		});
+		expect(
+			service.determineRunnerSelection(["GPT-5.6 Sol", "low effort"]),
+		).toMatchObject({
+			modelOverride: "gpt-5.6-sol",
+			modelReasoningEffort: "low",
+		});
+	});
+
+	it("description effort overrides labels and does not leak to Claude", () => {
+		const service = new RunnerSelectionService({
+			defaultRunner: "codex",
+			codexDefaultReasoningEffort: "low",
+		} as EdgeWorkerConfig);
+		expect(
+			service.determineRunnerSelection(
+				["GPT-5.6 Sol · high"],
+				"[effort=medium]",
+			),
+		).toMatchObject({ modelReasoningEffort: "medium" });
+		expect(
+			service.determineRunnerSelection(["Claude", "GPT-5.6 Sol · high"])
+				.modelReasoningEffort,
+		).toBeUndefined();
+	});
+
 	it("lets description selectors override provider/model labels", () => {
 		const service = new RunnerSelectionService({} as EdgeWorkerConfig);
 

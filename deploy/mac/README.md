@@ -16,6 +16,12 @@ the existing tunnel exposes `https://cyrus.martinm.co`.
   Tunnel auto-update is disabled. This ignored binary must be provisioned when
   recreating this checkout; the tracked source alone is not a complete runtime.
 - State and OAuth: `~/.cyrus`; no `.env` file is needed.
+- Issue runner: `defaultRunner=codex`, `codexDefaultModel=gpt-5.6-sol`, and
+  `codexDefaultReasoningEffort=low` in `~/.cyrus/config.json`. The maintained
+  fork recognizes existing Linear `GPT-5.6 Sol` and effort labels. Change the
+  config through an atomic, backed-up writer, then restore mode 600 (the
+  project-bootstrap writer currently creates a mode-644 replacement); reload
+  it before delegation.
 - Secrets: existing Bitwarden items, cached by `./loadSecrets.sh` in Keychain.
   `runCyrus.sh` reads the four caches and exports the GitHub token to children.
 - Log: `~/Library/Logs/cyrus.log`, mode 600. No log rotation is installed yet.
@@ -72,7 +78,9 @@ launcher. Do not restore an old expired OAuth token merely to roll code back.
 
 Mac service startup, public status/version, launchd-context credentials,
 sandbox-authenticated GitHub reads, separate worker/tunnel failure recovery,
-and clean unload/reload passed during deployment.
+and clean unload/reload passed during deployment. A sandboxed authenticated
+`git push --dry-run` to the `mgenart` remote also passed after the Sol/low
+configuration change; it created no branch and is not proof of a real PR.
 Login/reboot and sleep/wake behaviour need natural lifecycle observations.
 Offline delegation, full F1 session execution, and push/PR delivery remain in
 the installation plan. No model-assisted task was dispatched in this deployment.

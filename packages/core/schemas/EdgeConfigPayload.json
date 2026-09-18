@@ -546,6 +546,10 @@
 		"codexDefaultModel": {
 			"type": "string"
 		},
+		"codexDefaultReasoningEffort": {
+			"type": "string",
+			"enum": ["minimal", "low", "medium", "high", "xhigh"]
+		},
 		"cursorDefaultModel": {
 			"type": "string"
 		},

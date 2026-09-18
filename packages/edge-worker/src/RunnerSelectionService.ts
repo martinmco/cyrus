@@ -123,6 +123,7 @@ export class RunnerSelectionService {
 	 * Supported description tags:
 	 * - [agent=claude|gemini|codex|cursor|opencode]
 	 * - [model=<model-name>]
+	 * - [effort=minimal|low|medium|high|xhigh] (Codex only)
 	 *
 	 * Supported Linear label selectors:
 	 * - <provider>/<model>, where provider is claude, gemini, codex, cursor, or openai
@@ -142,8 +143,16 @@ export class RunnerSelectionService {
 		runnerType: RunnerType;
 		modelOverride?: string;
 		fallbackModelOverride?: string;
+		modelReasoningEffort?: "minimal" | "low" | "medium" | "high" | "xhigh";
 	} {
-		const normalizedLabels = (labels || []).map((label) => label.toLowerCase());
+		const rawLabels = (labels || []).map((label) => label.toLowerCase());
+		// Linear's human-friendly GPT labels need the canonical model spelling.
+		const normalizedLabels = rawLabels.map((label) => {
+			const match = label.match(
+				/^gpt-(\d+(?:\.\d+)?)\s+([a-z][a-z0-9-]*)(?:\s*·\s*(?:minimal|low|medium|high|xhigh))?$/,
+			);
+			return match ? `gpt-${match[1]}-${match[2]}` : label;
+		});
 		const normalizedDescription = issueDescription || "";
 		const descriptionAgentTagRaw = this.parseDescriptionTag(
 			normalizedDescription,
@@ -153,6 +162,10 @@ export class RunnerSelectionService {
 			normalizedDescription,
 			"model",
 		);
+		const descriptionEffort = this.parseDescriptionTag(
+			normalizedDescription,
+			"effort",
+		)?.toLowerCase();
 
 		const defaultModelByRunner: Record<RunnerType, string | undefined> = {
 			claude: this.getDefaultModelForRunner("claude"),
@@ -377,10 +390,38 @@ export class RunnerSelectionService {
 			fallbackModelOverride = defaultFallbackByRunner[runnerType];
 		}
 
+		const isEffort = (
+			value: string | undefined,
+		): value is "minimal" | "low" | "medium" | "high" | "xhigh" =>
+			value === "minimal" ||
+			value === "low" ||
+			value === "medium" ||
+			value === "high" ||
+			value === "xhigh";
+		const effortLabel = rawLabels
+			.map(
+				(label) => label.match(/^(minimal|low|medium|high|xhigh) effort$/)?.[1],
+			)
+			.find(isEffort);
+		const selectedModelLabel = rawLabels.find(
+			(_, index) => normalizedLabels[index] === resolvedModelOverride,
+		);
+		const modelLabelEffort = selectedModelLabel?.match(
+			/·\s*(minimal|low|medium|high|xhigh)$/,
+		)?.[1];
+		const modelReasoningEffort =
+			runnerType === "codex"
+				? ((isEffort(descriptionEffort) ? descriptionEffort : undefined) ??
+					effortLabel ??
+					(isEffort(modelLabelEffort) ? modelLabelEffort : undefined) ??
+					this.config.codexDefaultReasoningEffort)
+				: undefined;
+
 		return {
 			runnerType,
 			modelOverride: resolvedModelOverride,
 			fallbackModelOverride,
+			modelReasoningEffort,
 		};
 	}
 }

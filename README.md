@@ -14,6 +14,12 @@ See [Mac setup, operations and rollback](./deploy/mac/README.md). To check the
 existing credentials without a model turn, run `./runCyrus.sh check`.
 The fork's Linear route is `cy-4244`, with `Cyrus Installation` as the fallback
 project name; Cyrus worktrees for this fork start from `codex/maintained-install`.
+Issue sessions default to Codex `gpt-5.6-sol` with `low` reasoning. Linear's
+`Codex` agent label selects the runner; `GPT-5.6 Sol` or `GPT-5.6 Sol · high`
+selects a model and optional effort, and `low effort` / `medium effort` /
+`high effort` selects reasoning separately. Issue description tags
+`[agent=codex]`, `[model=gpt-5.6-sol]`, and `[effort=low]` override labels.
+See [Mac operations](./deploy/mac/README.md) for the configured default.
 
 <div>
   <a href="https://github.com/ceedaragents/cyrus/actions">

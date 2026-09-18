@@ -29,6 +29,30 @@ describe("ConfigManager", () => {
 		}
 	});
 
+	it("hot-reloads the default Codex reasoning effort", async () => {
+		tempDir = await mkdtemp(join(tmpdir(), "cyrus-config-manager-"));
+		const configPath = join(tempDir, "config.json");
+		const manager = new ConfigManager(
+			{ repositories: [repo], codexDefaultReasoningEffort: "high" },
+			logger,
+			configPath,
+			new Map([[repo.id, repo]]),
+		);
+		const onConfigChanged = vi.fn();
+		manager.on("configChanged", onConfigChanged);
+		await writeFile(
+			configPath,
+			JSON.stringify({
+				repositories: [repo],
+				codexDefaultReasoningEffort: "low",
+			}),
+		);
+		await (manager as any).handleConfigChange();
+		expect(
+			onConfigChanged.mock.calls[0][0].newConfig.codexDefaultReasoningEffort,
+		).toBe("low");
+	});
+
 	it("reloads top-level OpenCode config and emits it as a global config change", async () => {
 		tempDir = await mkdtemp(join(tmpdir(), "cyrus-config-manager-"));
 		const configPath = join(tempDir, "config.json");
